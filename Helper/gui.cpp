@@ -12,6 +12,7 @@
 #include "CheatManager.hpp"
 
 void GUI::render() noexcept{
+
     this->reset();
     
 	ImGui::Begin("WuKong", nullptr);
@@ -19,9 +20,8 @@ void GUI::render() noexcept{
 		if (ImGui::BeginTabBar("MyTabBar")) {
             if (ImGui::BeginTabItem("Monitor"))
             {
-                ImGui::Text("base:%p", cheatManager.memory->base);
-                ImGui::Text("attack:%f", *(float*)cheatManager.memory->attack);
-                ImGui::Text("will:%d", *(INT32*)cheatManager.memory->will);
+                ImGui::Text("attack:%d", cheatManager.memory->attack);
+                ImGui::Text("will:%d", cheatManager.memory->will);
                 ImGui::EndTabItem();
             }
 
@@ -39,6 +39,7 @@ void GUI::render() noexcept{
             ImGui::EndTabBar();
 		}
 	}
+    cheatManager.logger->addLog("render successful!");
 	ImGui::End();
 }
 
@@ -58,7 +59,7 @@ void GUI::setFontSize() noexcept{
 
 void GUI::setRainbowFont() noexcept{
     this->rainbowFont_real = this->rainbowFont_temp;
-    ImGui::rainbowText();
+    //ImGui::rainbowText();
 }
 
 void GUI::setAlpha() noexcept{

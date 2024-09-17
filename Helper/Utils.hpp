@@ -7,9 +7,9 @@
 
 #include "imgui/imgui.h"
 
-
-
-namespace ImGui
-{
+class Utils {
+public:
     void rainbowText() noexcept;
+    void msg_uintptr(uintptr_t p, const char* title);
+    void msg_int(int p, const char* title);
 };

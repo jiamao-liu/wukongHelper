@@ -8,6 +8,7 @@
 #include "CheatManager.hpp"
 #include "Memory.hpp"
 #include "Offsets.hpp"
+#include "Utils.hpp"
 
 [[nodiscard]] static std::uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexcept
 {
@@ -81,9 +82,10 @@
 	return nullptr;
 
 }
-void Memory::Init() {
+void Memory::Init() noexcept {
 	this->base = reinterpret_cast<std::uintptr_t>(::GetModuleHandle(nullptr));
 	this->readValue();
+
 	/*
 	try {
 		const auto& signatureToSearch{ this->sigs };
@@ -141,20 +143,21 @@ void Memory::Init() {
 	*/
 }
 
-uintptr_t r(uintptr_t base) {
-	return (uintptr_t)*(PDWORD*)base;
-}
-
 void Memory::readValue() {
+	cheatManager.utils->msg_int(this->values.size(), "size");
+
 	for(auto value :this->values)
 	{
 		uintptr_t baseAddress=this->base + value.base;
 		for (auto offset : value.pattern) {
 			baseAddress = (uintptr_t) * (PDWORD*)baseAddress + offset;
 		}
+		cheatManager.utils->msg_uintptr(baseAddress, "addr");
+
 		*value.target = baseAddress;
-		char buffer[20];
 	}
+	cheatManager.utils->msg_int(this->values.size(), "结束？");
+
 }
 
 void Memory::Update() noexcept {

@@ -32,6 +32,7 @@ __declspec(safebuffers) static void WINAPI DllAttach([[maybe_unused]] LPVOID lp)
 
 	if (HideThread(::GetCurrentThread()))
 		cheatManager.logger->addLog("Thread Hidden!\n");
+	cheatManager.utils->msg_int(cheatManager.memory->values.size(),"main");
 	cheatManager.memory->Init();
 	cheatManager.logger->addLog("memory init successful!\n");
 	cheatManager.hooks->install();
@@ -39,6 +40,7 @@ __declspec(safebuffers) static void WINAPI DllAttach([[maybe_unused]] LPVOID lp)
 
 	while (true)
 		std::this_thread::sleep_for(2500ms);
+	cheatManager.logger->addLog("ExitProcess\n");
 	::ExitProcess(0u);
 }
 
