@@ -6,11 +6,9 @@
 #include <filesystem>
 #include <string>
 #include "MinHook.h"
-#include "fnv_hash.hpp"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
-#include "vmt_smart_hook.hpp"
 
 #include "CheatManager.hpp"
 #include "Hook.hpp"
@@ -105,7 +103,9 @@ void Hooks::init() noexcept{
 
 void Hooks::install() noexcept
 {
+	
 	this->init();
+	cheatManager.logger->addLog("hook init successful!\n");
 	if (g_pSwapChain) {
 		auto vtable_ptr = (void***)(g_pSwapChain);
 		auto vtable = *vtable_ptr;
@@ -113,6 +113,7 @@ void Hooks::install() noexcept
 		MH_Initialize();
 		MH_CreateHook(present, my_present, &origin_present);
 		MH_EnableHook(present);
+		cheatManager.logger->addLog("enable hook successful!\n");
 		// 看看是否需要hook 13 
 		g_pd3dDevice->Release();
 		g_pSwapChain->Release();

@@ -30,17 +30,15 @@ __declspec(safebuffers) static void WINAPI DllAttach([[maybe_unused]] LPVOID lp)
 {
 	using namespace std::chrono_literals;
 
-	cheatManager.start();
 	if (HideThread(::GetCurrentThread()))
 		cheatManager.logger->addLog("Thread Hidden!\n");
-
-
-
 	cheatManager.memory->Init();
+	cheatManager.logger->addLog("memory init successful!\n");
 	cheatManager.hooks->install();
+	cheatManager.logger->addLog("hook install successful!\n");
+
 	while (true)
 		std::this_thread::sleep_for(2500ms);
-
 	::ExitProcess(0u);
 }
 
@@ -50,8 +48,9 @@ __declspec(safebuffers) BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
                      )
 {
-	// init 
-    DisableThreadLibraryCalls(hModule);
+	if (ul_reason_for_call != DLL_PROCESS_ATTACH) // 这里必须加上，dll、新线程创建和卸载时都会调这个函数。调用原因就是这个参数
+		return FALSE;
+	DisableThreadLibraryCalls(hModule);
 	std::setlocale(LC_ALL, ".utf8");
 	HideThread(hModule);
 	::_beginthreadex(nullptr, 0u, reinterpret_cast<_beginthreadex_proc_type>(DllAttach), nullptr, 0u, nullptr);
