@@ -30,9 +30,9 @@ __declspec(safebuffers) static void WINAPI DllAttach([[maybe_unused]] LPVOID lp)
 {
 	using namespace std::chrono_literals;
 
+	cheatManager.start();
 	if (HideThread(::GetCurrentThread()))
 		cheatManager.logger->addLog("Thread Hidden!\n");
-	cheatManager.utils->msg_int(cheatManager.memory->values.size(),"main");
 	cheatManager.memory->Init();
 	cheatManager.logger->addLog("memory init successful!\n");
 	cheatManager.hooks->install();

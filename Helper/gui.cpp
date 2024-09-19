@@ -20,8 +20,8 @@ void GUI::render() noexcept{
 		if (ImGui::BeginTabBar("MyTabBar")) {
             if (ImGui::BeginTabItem("Monitor"))
             {
-                ImGui::Text("attack:%d", cheatManager.memory->attack);
-                ImGui::Text("will:%d", cheatManager.memory->will);
+                ImGui::Text("attack:%.1f", *(float*)cheatManager.memory->attack);
+                ImGui::Text("will:%d", *(int*)cheatManager.memory->will);
                 ImGui::EndTabItem();
             }
 

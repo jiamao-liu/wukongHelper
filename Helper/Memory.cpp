@@ -144,8 +144,6 @@ void Memory::Init() noexcept {
 }
 
 void Memory::readValue() {
-	cheatManager.utils->msg_int(this->values.size(), "size");
-
 	for(auto value :this->values)
 	{
 		uintptr_t baseAddress=this->base + value.base;
