@@ -20,6 +20,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{099fa24f-f599-40c0-8633-929aa38fad31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Conf">
+      <UniqueIdentifier>{e2b99a9b-641b-4fc5-ac47-ced250ad6115}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -70,6 +73,9 @@
     <ClInclude Include="MinHook.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Conf.hpp">
+      <Filter>Conf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -106,5 +112,11 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Conf.cpp">
+      <Filter>Conf</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

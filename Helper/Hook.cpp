@@ -26,7 +26,13 @@ WNDPROC origin_wndProc;
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND, UINT, WPARAM, LPARAM);
 
 LRESULT __stdcall WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam)) { return true; }
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
+		return true; 
+	if (uMsg == WM_KEYDOWN) {
+		if (wParam == cheatManager.config->settingMenu.getKey()) {
+			cheatManager.gui->setting= !cheatManager.gui->setting;
+		}
+	}
 	return CallWindowProc(origin_wndProc, hwnd, uMsg, wParam, lParam);
 }
 
@@ -51,6 +57,10 @@ static void __stdcall init_imgui(IDXGISwapChain* device) noexcept
 	ImGui_ImplWin32_Init(g_hwnd);
 	ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dContext);
 	ImGui_ImplDX11_CreateDeviceObjects();
+
+	auto& io{ ImGui::GetIO() }; (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+
 }
 
 

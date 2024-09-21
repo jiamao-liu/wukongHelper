@@ -144,18 +144,18 @@ void Memory::Init() noexcept {
 }
 
 void Memory::readValue() {
-	for(auto value :this->values)
+	cheatManager.utils->msg_int(this->values.size(), "开始？");
+	for (auto value : this->values)
 	{
-		uintptr_t baseAddress=this->base + value.base;
+		uintptr_t baseAddress = this->base + value.base;
 		for (auto offset : value.pattern) {
-			baseAddress = (uintptr_t) * (PDWORD*)baseAddress + offset;
+			baseAddress = (uintptr_t) * (uintptr_t*)baseAddress + offset;
 		}
 		cheatManager.utils->msg_uintptr(baseAddress, "addr");
 
 		*value.target = baseAddress;
 	}
-	cheatManager.utils->msg_int(this->values.size(), "结束？");
-
+	cheatManager.utils->msg_int(this->values.size(), "结束?");
 }
 
 void Memory::Update() noexcept {
