@@ -1,4 +1,4 @@
-#pragma warning(disable : 6011)
+﻿#pragma warning(disable : 6011)
 
 #include <Windows.h>
 #include <ShlObj.h>
@@ -9,7 +9,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
-
+#include "f.h"
 #include "CheatManager.hpp"
 #include "Hook.hpp"
 
@@ -20,6 +20,20 @@ static ID3D11RenderTargetView* view = nullptr;
 static HWND g_hwnd = nullptr;
 void* origin_present = nullptr;
 using Present = HRESULT(__stdcall*)(IDXGISwapChain*, UINT, UINT);
+
+static const ImWchar tahomaRanges[] = {
+	0x0020, 0x00FF, // Basic Latin + Latin Supplement
+	0x0100, 0x024F, // Latin Extended-A + Latin Extended-B
+	0x0250, 0x02FF, // IPA Extensions + Spacing Modifier Letters
+	0x0300, 0x03FF, // Combining Diacritical Marks + Greek/Coptic
+	0x0400, 0x052F, // Cyrillic + Cyrillic Supplement
+	0x0530, 0x06FF, // Armenian + Hebrew + Arabic
+	0x0E00, 0x0E7F, // Thai
+	0x1E00, 0x1FFF, // Latin Extended Additional + Greek Extended
+	0x2000, 0x20CF, // General Punctuation + Superscripts and Subscripts + Currency Symbols
+	0x2100, 0x218F, // Letterlike Symbols + Number Forms
+	0,
+};
 
 WNDPROC origin_wndProc;
 
@@ -36,9 +50,9 @@ LRESULT __stdcall WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	return CallWindowProc(origin_wndProc, hwnd, uMsg, wParam, lParam);
 }
 
-static void __stdcall init_imgui(IDXGISwapChain* device) noexcept
+static void __stdcall init_imgui(IDXGISwapChain* sc) noexcept
 {
-	g_pSwapChain = device;
+	g_pSwapChain = sc;
 	g_pSwapChain->GetDevice(__uuidof(g_pd3dDevice), reinterpret_cast<void**>(&(g_pd3dDevice)));
 	g_pd3dDevice->GetImmediateContext(&g_pd3dContext);
 
@@ -47,19 +61,24 @@ static void __stdcall init_imgui(IDXGISwapChain* device) noexcept
 	g_hwnd = sd.OutputWindow;
 
 	ID3D11Texture2D* buf{};
-	device->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buf);
+	g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buf);
 	g_pd3dDevice->CreateRenderTargetView(buf, nullptr, &view);
 	buf->Release();
 
 	origin_wndProc = WNDPROC(::SetWindowLongPtr(g_hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(WndProc)));
 
 	ImGui::CreateContext();
+	auto& io{ ImGui::GetIO() }; (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+	cheatManager.utils->msg_int(io.Fonts->Fonts.size(), "123");
+	io.Fonts->AddFontFromMemoryTTF((void*)wryh_data, wryh_size, 20.0f,nullptr,io.Fonts->GetGlyphRangesChineseFull());
+	cheatManager.utils->msg_int(io.Fonts->Fonts.size(), "123");
+
 	ImGui_ImplWin32_Init(g_hwnd);
 	ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dContext);
 	ImGui_ImplDX11_CreateDeviceObjects();
 
-	auto& io{ ImGui::GetIO() }; (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+
 
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include "imgui/imgui.h"
@@ -24,6 +24,8 @@ public:
 	bool setting = false;
 	bool showWindow = true;
 	bool noMouse = false;
+
+	ImFont* font;
 
 	ImVec4 color_temp = ImVec4(0.45f, 0.55f, 0.60f, 0.50f);
 	ImVec4 color_real = ImVec4(0.45f, 0.55f, 0.60f, 0.50f);

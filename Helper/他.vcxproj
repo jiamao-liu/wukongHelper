@@ -156,6 +156,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/utf-8</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,6 +170,7 @@
   <ItemGroup>
     <ClInclude Include="CheatManager.hpp" />
     <ClInclude Include="Conf.hpp" />
+    <ClInclude Include="f.h" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="Hook.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -197,6 +199,7 @@
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>

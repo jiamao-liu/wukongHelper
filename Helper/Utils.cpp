@@ -1,4 +1,4 @@
-
+Ôªø
 #include <Windows.h>
 #include <algorithm>
 #include <array>
@@ -244,7 +244,7 @@ void Utils::hotkey(const char* label, KeyBind& key, float samelineOffset, const 
     const auto id{ ImGui::GetID(label) };
     ImGui::PushID(label);
 
-    ImGui::TextUnformatted(label); // Œﬁ∏Ò ΩªØŒƒ±æ
+    ImGui::TextUnformatted(label); // Êó†Ê†ºÂºèÂåñÊñáÊú¨
     ImGui::SameLine(samelineOffset);
 
     if (ImGui::GetActiveID() == id) {
@@ -261,4 +261,17 @@ void Utils::hotkey(const char* label, KeyBind& key, float samelineOffset, const 
     }
 
     ImGui::PopID();
+}
+
+char* Utils::ConvertLPWSTRToChar(LPWSTR lpwszStr)
+{
+    int nChars = WideCharToMultiByte(CP_ACP, 0, lpwszStr, -1, NULL, 0, NULL, NULL);
+    if (nChars == 0) {
+        return nullptr;
+    }
+
+    char* pszStr = new char[nChars];
+    WideCharToMultiByte(CP_ACP, 0, lpwszStr, -1, pszStr, nChars, NULL, NULL);
+
+    return pszStr;
 }

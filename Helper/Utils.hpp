@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include <concepts>
 #include <mutex>
 #include <random>
 #include <string>
-
+#include <Windows.h>
 #include "imgui/imgui.h"
 
 
@@ -56,4 +56,5 @@ public:
     void msg_uintptr(uintptr_t p, const char* title);
     void msg_int(int p, const char* title);
     void hotkey(const char* label, KeyBind& key, float samelineOffset = 0.0f, const ImVec2& size = { 100.0f, 0.0f }) noexcept;
+    char* ConvertLPWSTRToChar(LPWSTR lpwszStr);
 };

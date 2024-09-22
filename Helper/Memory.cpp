@@ -1,4 +1,4 @@
-
+﻿
 #include <Windows.h>
 #include <chrono>
 #include <cstdint>
@@ -144,7 +144,6 @@ void Memory::Init() noexcept {
 }
 
 void Memory::readValue() {
-	cheatManager.utils->msg_int(this->values.size(), "开始？");
 	for (auto value : this->values)
 	{
 		uintptr_t baseAddress = this->base + value.base;
@@ -155,7 +154,6 @@ void Memory::readValue() {
 
 		*value.target = baseAddress;
 	}
-	cheatManager.utils->msg_int(this->values.size(), "结束?");
 }
 
 void Memory::Update() noexcept {

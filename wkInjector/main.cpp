@@ -31,8 +31,8 @@ int injector() {
 	fontInfo.cbSize = sizeof(fontInfo);
 	GetCurrentConsoleFontEx(hConsole, FALSE, &fontInfo);
 
-	fontInfo.dwFontSize.X = 12; // è®¾ç½®å­—ä½“å®½åº¦
-	fontInfo.dwFontSize.Y = 16; // è®¾ç½®å­—ä½“é«˜åº¦
+	fontInfo.dwFontSize.X = 12; // ÉèÖÃ×ÖÌå¿í¶È
+	fontInfo.dwFontSize.Y = 16; // ÉèÖÃ×ÖÌå¸ß¶È
 
 	SetCurrentConsoleFontEx(hConsole, FALSE, &fontInfo);
 
@@ -42,7 +42,7 @@ int injector() {
 		auto process_snap{ LI_FN(CreateToolhelp32Snapshot)(TH32CS_SNAPPROCESS, 0) };
 		if (process_snap == INVALID_HANDLE_VALUE)
 		{
-			MessageBoxW(NULL, L"æ— æ³•è·å–ç³»ç»Ÿè¿›ç¨‹å¿«ç…§", L"é”™è¯¯", MB_OK | MB_ICONINFORMATION);
+			MessageBoxW(NULL, L"ÎŞ·¨»ñÈ¡ÏµÍ³½ø³Ì¿ìÕÕ", L"´íÎó", MB_OK | MB_ICONINFORMATION);
 			return -1;
 		}
 
@@ -64,7 +64,7 @@ int injector() {
 	}
 
 
-	std::cout << "successful! found " << list.size() << "process ï¼š" << " ";
+	std::cout << "successful! found " << list.size() << "process £º" << " ";
 	for (auto it = list.begin(); it != list.end(); ++it) {
 		std::cout << *it << " ";
 	}
